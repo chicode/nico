@@ -1,0 +1,19 @@
+[package]
+name = "nico-engine"
+version = "0.1.0"
+authors = ["Anton <antonoutkine@gmail.com>", "Noah <33094578+coolreader18@users.noreply.github.com>"]
+edition = "2018"
+license = "GPL-3.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+nico-types = { path = "../nico-types" }
+
+wasm-bindgen = "0.2"
+console_error_panic_hook = "0.1"
+
+[dependencies.web-sys]
+version = "0.3"
+features = ["console"]

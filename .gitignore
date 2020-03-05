@@ -1,0 +1,8 @@
+/target
+pkg/
+dist/
+
+node_modules
+
+wasm-pack.log
+yarn-error.log

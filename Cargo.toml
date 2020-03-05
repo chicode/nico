@@ -1,0 +1,5 @@
+[profile.release]
+lto = true
+
+[workspace]
+members = ["nico-types", "nico-editor", "nico-engine"]

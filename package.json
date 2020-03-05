@@ -1,0 +1,4 @@
+{
+  "private": true,
+  "workspaces": ["nico-editor", "nico-engine"]
+}
