@@ -2,4 +2,4 @@
 lto = true
 
 [workspace]
-members = ["nico-types", "nico-editor", "nico-engine"]
+members = ["types", "editor", "engine"]

@@ -9,7 +9,7 @@ license = "GPL-3.0"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-nico-types = { path = "../nico-types" }
+nico-types = { path = "../types" }
 
 log = "0.4"
 console_log = "0.1"

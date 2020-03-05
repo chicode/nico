@@ -9,7 +9,7 @@ license = "GPL-3.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-nico-types = { path = "../nico-types" }
+nico-types = { path = "../types" }
 
 wasm-bindgen = "0.2"
 console_error_panic_hook = "0.1"
