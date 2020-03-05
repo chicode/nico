@@ -1,5 +1,9 @@
 use serde::{Deserialize, Serialize};
 
+pub use image::RgbaImage as Image;
+
+mod png_serde;
+
 #[derive(Serialize, Deserialize)]
 pub struct Game {
     obj_types: Vec<ObjType>,
@@ -24,12 +28,9 @@ pub enum ObjTypeDetails {
 
 #[derive(Serialize, Deserialize)]
 pub struct Sprite {
-    img_data: Vec<Pixel>,
-    img_height: usize,
-    img_width: usize,
+    #[serde(with = "png_serde")]
+    image: Image,
 }
-
-pub type Pixel = (u8, u8, u8);
 
 #[derive(Serialize, Deserialize)]
 pub struct Text {
