@@ -11,11 +11,12 @@ struct State {
 }
 
 pub enum View {
-    World, Events
+    World,
+    Events,
 }
 
 pub enum Msg {
-    ChangeView(View)
+    ChangeView(View),
 }
 
 impl Component for App {
@@ -23,22 +24,17 @@ impl Component for App {
     type Properties = ();
 
     fn create(_: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let state = State {
-            view: View::World
-        };
-        App {
-            link,
-            state,
-        }
+        let state = State { view: View::World };
+        App { link, state }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             Msg::ChangeView(view) => {
-                self.state.view = view
+                self.state.view = view;
+                true
             }
         }
-        true
     }
 
     fn view(&self) -> Html {
@@ -68,4 +64,3 @@ impl App {
         }
     }
 }
-
