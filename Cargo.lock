@@ -392,6 +392,7 @@ name = "nico-types"
 version = "0.1.0"
 dependencies = [
  "image",
+ "js-sys",
  "serde",
  "wasm-bindgen",
  "web-sys",

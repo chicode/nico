@@ -1,6 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-mod png_serde;
+mod img;
+pub mod util;
+
+pub use img::Image;
 
 #[derive(Serialize, Deserialize)]
 pub struct Game {
@@ -22,18 +25,6 @@ pub struct ObjType(ObjTypeId, ObjTypeDetails);
 pub enum ObjTypeDetails {
     Sprite(Sprite),
     Text(Text),
-}
-
-#[derive(Serialize, Deserialize)]
-pub struct Image {
-    #[serde(with = "png_serde")]
-    img: image::RgbaImage,
-}
-impl Image {
-    pub fn to_js(&mut self) -> web_sys::ImageData {
-        let (w, h) = self.img.dimensions();
-        web_sys::ImageData::new_with_u8_clamped_array_and_sh(wasm_bindgen::Clamped(&mut self.img), w, h).unwrap()
-    }
 }
 
 #[derive(Serialize, Deserialize)]

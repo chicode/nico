@@ -1,16 +1,27 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
+use nico_types::util;
+
+fn ctx() -> web_sys::CanvasRenderingContext2d {
+    util::canvas_ctx(
+        util::document()
+            .get_element_by_id("canv")
+            .unwrap()
+            .dyn_into()
+            .unwrap(),
+    )
+}
+
 #[wasm_bindgen(start)]
 pub fn main_js() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
 
+    let mut img = nico_types::Image::load_png(include_bytes!("../static/img.png")).unwrap();
 
-    let win = web_sys::window().unwrap();
-    let doc = win.document().unwrap();
+    let img_data = img.to_img_data();
 
-    let canv = doc.get_element_by_id("canv").unwrap().dyn_into::<web_sys::HtmlCanvasElement>().unwrap();
-    let ctx = canv.get_context("2d").unwrap().unwrap().dyn_into::<web_sys::CanvasRenderingContext2d>().unwrap();
+    ctx().put_image_data(&img_data, 0.0, 0.0)?;
 
     Ok(())
 }
