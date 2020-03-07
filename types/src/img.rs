@@ -22,7 +22,7 @@ impl From<ImageDef> for image::RgbaImage {
     }
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Image(#[serde(with = "ImageDef")] image::RgbaImage);
 impl Image {
     pub fn load_png(b: &[u8]) -> image::ImageResult<Self> {
@@ -63,6 +63,10 @@ impl Image {
 
         Ok(Self::from_img_data(&img_data))
     }
+
+    pub fn as_data(&self) -> &[u8] {
+        &***self
+    }
 }
 impl std::ops::Deref for Image {
     type Target = image::RgbaImage;
@@ -73,5 +77,18 @@ impl std::ops::Deref for Image {
 impl std::ops::DerefMut for Image {
     fn deref_mut(&mut self) -> &mut Self::Target {
         &mut self.0
+    }
+}
+impl PartialEq for Image {
+    fn eq(&self, other: &Self) -> bool {
+        self.width() == other.width()
+            && self.height() == other.height()
+            && self.as_data() == other.as_data()
+    }
+}
+impl Default for Image {
+    fn default() -> Self {
+        let c = u8::max_value();
+        Image(image::RgbaImage::from_pixel(16, 16, [c, c, c, c].into()))
     }
 }
