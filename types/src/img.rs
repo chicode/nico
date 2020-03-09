@@ -31,9 +31,18 @@ impl Image {
         ))
     }
 
-    pub fn to_img_data(&mut self) -> web_sys::ImageData {
+    pub fn to_img_data(&self) -> web_sys::ImageData {
+        // work around web-sys's version requiring an &mut [u8] for no reason
+        #[wasm_bindgen]
+        extern "C" {
+            type ImageData;
+            #[wasm_bindgen(constructor, catch)]
+            fn new(b: Clamped<&[u8]>, w: u32, h: u32) -> Result<ImageData, JsValue>;
+        }
         let (w, h) = self.0.dimensions();
-        web_sys::ImageData::new_with_u8_clamped_array_and_sh(Clamped(&mut self.0), w, h).unwrap()
+        ImageData::new(Clamped(&self.0), w, h)
+            .unwrap()
+            .unchecked_into()
     }
 
     pub fn from_img_data(img_data: &web_sys::ImageData) -> Self {

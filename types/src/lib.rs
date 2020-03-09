@@ -7,9 +7,9 @@ pub use img::Image;
 
 #[derive(Serialize, Deserialize)]
 pub struct Game {
-    obj_types: Vec<ObjType>,
-    obj_instances: Vec<ObjInstance>,
-    events: Vec<Event>,
+    pub obj_types: Vec<ObjType>,
+    pub obj_instances: Vec<ObjInstance>,
+    pub events: Vec<Event>,
 }
 
 // Objects
@@ -19,7 +19,7 @@ pub struct Game {
 pub type ObjTypeId = usize;
 
 #[derive(Serialize, Deserialize)]
-pub struct ObjType(ObjTypeId, ObjTypeDetails);
+pub struct ObjType(pub ObjTypeId, pub ObjTypeDetails);
 
 #[derive(Serialize, Deserialize)]
 pub enum ObjTypeDetails {
@@ -29,12 +29,12 @@ pub enum ObjTypeDetails {
 
 #[derive(Serialize, Deserialize)]
 pub struct Sprite {
-    image: Image,
+    pub image: Image,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct Text {
-    text: String,
+    pub text: String,
 }
 
 // Object Instances
@@ -43,16 +43,16 @@ pub type ObjInstanceId = usize;
 
 #[derive(Serialize, Deserialize)]
 pub struct ObjInstance {
-    id: ObjInstanceId,
-    type_id: ObjTypeId,
-    x: usize,
-    y: usize,
+    pub id: ObjInstanceId,
+    pub type_id: ObjTypeId,
+    pub x: usize,
+    pub y: usize,
 }
 
 // Events
 
 #[derive(Serialize, Deserialize)]
-pub struct Event(Vec<Condition>, Vec<Action>);
+pub struct Event(pub Vec<Condition>, pub Vec<Action>);
 
 // Conditions
 
@@ -104,6 +104,8 @@ pub enum ObjAction {
 
 #[derive(Serialize, Deserialize)]
 pub enum GeneralObjAction {
+    AddX(usize),
+    AddY(usize),
     SetX(usize),
     SetY(usize),
 }

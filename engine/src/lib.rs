@@ -2,6 +2,34 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 
 use nico_types::util;
+use nico_types::{ObjType, ObjTypeDetails};
+
+mod example_game;
+
+struct Game {
+    game: nico_types::Game,
+}
+
+impl Game {
+    fn new(game: nico_types::Game) -> Self {
+        Game { game }
+    }
+
+    fn render(&self) {
+        let ctx = ctx();
+        for inst in &self.game.obj_instances {
+            let ObjType(_, ref ty) = self.game.obj_types[inst.type_id];
+            match ty {
+                ObjTypeDetails::Sprite(sp) => {
+                    let im = sp.image.to_img_data();
+                    ctx.put_image_data(&im, inst.x as f64, inst.y as f64)
+                        .unwrap();
+                }
+                ObjTypeDetails::Text(_t) => todo!(),
+            }
+        }
+    }
+}
 
 fn ctx() -> web_sys::CanvasRenderingContext2d {
     util::canvas_ctx(
@@ -17,11 +45,9 @@ fn ctx() -> web_sys::CanvasRenderingContext2d {
 pub fn main_js() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
 
-    let mut img = nico_types::Image::load_png(include_bytes!("../static/img.png")).unwrap();
+    let game = Game::new(example_game::game());
 
-    let img_data = img.to_img_data();
-
-    ctx().put_image_data(&img_data, 0.0, 0.0)?;
+    game.render();
 
     Ok(())
 }
