@@ -45,8 +45,8 @@ pub type ObjInstanceId = usize;
 pub struct ObjInstance {
     pub id: ObjInstanceId,
     pub type_id: ObjTypeId,
-    pub x: usize,
-    pub y: usize,
+    pub x: isize,
+    pub y: isize,
 }
 
 // Events
@@ -69,7 +69,7 @@ pub enum SystemCondition {
     EveryTick,
 }
 
-pub type Key = u8;
+pub type Key = u32;
 
 #[derive(Serialize, Deserialize)]
 pub enum ObjCondition {
@@ -104,10 +104,10 @@ pub enum ObjAction {
 
 #[derive(Serialize, Deserialize)]
 pub enum GeneralObjAction {
-    AddX(usize),
-    AddY(usize),
-    SetX(usize),
-    SetY(usize),
+    AddX(isize),
+    AddY(isize),
+    SetX(isize),
+    SetY(isize),
 }
 
 #[derive(Serialize, Deserialize)]
