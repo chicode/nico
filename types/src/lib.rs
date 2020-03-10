@@ -1,9 +1,11 @@
 use serde::{Deserialize, Serialize};
 
 mod img;
+mod keys;
 pub mod util;
 
 pub use img::Image;
+pub use keys::{ControlKey, Key};
 
 #[derive(Serialize, Deserialize)]
 pub struct Game {
@@ -68,8 +70,6 @@ pub enum SystemCondition {
     KeyReleased(Key),
     EveryTick,
 }
-
-pub type Key = u32;
 
 #[derive(Serialize, Deserialize)]
 pub enum ObjCondition {

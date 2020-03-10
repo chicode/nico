@@ -15,21 +15,21 @@ function checkReleased() {
 }
 
 document.addEventListener("keydown", ev => {
-    keys[ev.keyCode] = true
+    keys[ev.code] = true
     checkReleased()
 })
 
 document.addEventListener("keyup", ev => {
-    keys[ev.keyCode] = false
+    keys[ev.code] = false
     checkReleased()
 })
 
-export const key_pressed = key => {
+export const keyPressed = key => {
     const ret = !!keys[key]
     checkReleased()
     return ret
 }
-export const key_released = key => {
+export const keyReleased = key => {
     const ret = !!released[key]
     checkReleased()
     return ret

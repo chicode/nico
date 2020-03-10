@@ -23,14 +23,18 @@ pub fn game() -> Game {
                 )],
             ),
             Event(
-                vec![Condition::System(SystemCondition::KeyPressed(39))], // RightArrow, https://keycode.info
+                vec![Condition::System(SystemCondition::KeyPressed(
+                    Key::Control(ControlKey::ArrowRight),
+                ))],
                 vec![Action::Obj(
                     0,
                     ObjAction::General(GeneralObjAction::AddX(1)),
                 )],
             ),
             Event(
-                vec![Condition::System(SystemCondition::KeyPressed(37))], // LeftArrow, https://keycode.info
+                vec![Condition::System(SystemCondition::KeyPressed(
+                    Key::Control(ControlKey::ArrowLeft),
+                ))],
                 vec![Action::Obj(
                     0,
                     ObjAction::General(GeneralObjAction::AddX(-1)),

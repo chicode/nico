@@ -3,16 +3,18 @@ use wasm_bindgen::{closure::Closure, JsCast};
 
 use nico_types::util;
 use nico_types::{
-    Action, Condition, Event, GeneralObjAction, ObjAction, ObjInstance, ObjType, ObjTypeDetails,
-    SystemAction, SystemCondition,
+    Action, Condition, Event, GeneralObjAction, ObjAction, ObjType, ObjTypeDetails, SystemAction,
+    SystemCondition,
 };
 
 mod example_game;
 
 #[wasm_bindgen(module = "/src/keys.js")]
 extern "C" {
-    fn key_pressed(k: u32) -> bool;
-    fn key_released(k: u32) -> bool;
+    #[wasm_bindgen(js_name = keyPressed)]
+    fn key_pressed(k: &str) -> bool;
+    #[wasm_bindgen(js_name = keyReleased)]
+    fn key_released(k: &str) -> bool;
 }
 
 struct Game {
@@ -66,8 +68,8 @@ impl Game {
         match cond {
             Condition::System(c) => match c {
                 SystemCondition::EveryTick => true,
-                SystemCondition::KeyPressed(k) => key_pressed(*k),
-                SystemCondition::KeyReleased(k) => key_released(*k),
+                SystemCondition::KeyPressed(k) => key_pressed(k.to_code().as_ref()),
+                SystemCondition::KeyReleased(k) => key_released(k.to_code().as_ref()),
             },
             Condition::Obj(_obj, _c) => todo!(),
         }
